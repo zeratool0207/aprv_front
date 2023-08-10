@@ -23,11 +23,18 @@ const Main = () => {
                 '/api/board/list'
             );
 
-            console.log(response.data[0])
+            // console.log(response);
+            // console.log(response.data);
+            // console.log(response.data[0]);
 
-            setUserName(response.data[0].usr_name);
-            setPosition(response.data[0].cod_name);
-            setReprYn(response.data[0].repr_yn);
+            console.log(response.data[0].boardList);
+            console.log(response.data[0].searchTypeList);
+            console.log(response.data[0].aprvStatusList);
+
+            
+            setUserName(response.data[0].boardList[0].usr_name);
+            setPosition(response.data[0].boardList[0].cod_name);
+            setReprYn(response.data[0].boardList[0].repr_yn);
         } catch (e) {
             console.error(e);
         }
@@ -39,7 +46,6 @@ const Main = () => {
                 '/api/user/logout'
             );
 
-            console.log(response);
             if (response.status == '200') {
                 navigate('/');
             }
