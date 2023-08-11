@@ -4,14 +4,16 @@ import { useNavigate } from 'react-router-dom';
 
 const Main = () => {
 
+
     const [ userName, setUserName ] = useState('');
     const [ position, setPosition ] = useState('');
     const [ reprYn, setReprYn ] = useState('N');
 
     const navigate = useNavigate();
 
-    // const [] = useState();
-    // const [] = useState([]);
+    const [ boardList, setBoardList ] = useState([]);
+    const [ searchTypeList, setSearchTypeList ] = useState([]);
+    const [ aprvStatusList, setAprvStatusList ] = useState([]);
 
     useEffect( () => {
         goBoard();
@@ -23,18 +25,15 @@ const Main = () => {
                 '/api/board/list'
             );
 
-            // console.log(response);
-            // console.log(response.data);
-            // console.log(response.data[0]);
-
-            console.log(response.data[0].boardList);
-            console.log(response.data[0].searchTypeList);
-            console.log(response.data[0].aprvStatusList);
-
+            setBoardList(response.data[0].boardList);
+            setSearchTypeList(response.data[0].searchTypeList);
+            setAprvStatusList(response.data[0].aprvStatusList);
             
             setUserName(response.data[0].boardList[0].usr_name);
             setPosition(response.data[0].boardList[0].cod_name);
             setReprYn(response.data[0].boardList[0].repr_yn);
+
+            console.log(response.data[0].boardList);
         } catch (e) {
             console.error(e);
         }
@@ -54,12 +53,67 @@ const Main = () => {
         }
     }
 
+    const goWrite = () => {
+        navigate('/write')
+    }
+
+
     return (
         <>
             <h2>{userName}({position}) 님 환영합니다.</h2>
             <button type="button" onClick={() => goLogout()}>로그아웃</button> &nbsp;
-            <button type="button">글쓰기</button>  &nbsp;
+            <button type="button" onClick={() => goWrite()}>글쓰기</button>  &nbsp;
             { reprYn == 'Y' && <button>대리결제</button>}
+            <br/> <br/>
+            <select>
+                {searchTypeList.map((item, idx) => (
+                    <option value={item.cod_id} key={'searchType'+idx}>{item.cod_name}</option>
+                ))}
+            </select>
+            &nbsp;
+
+            <input type="text" />
+            &nbsp;
+
+            <select>
+                {aprvStatusList.map((item, idx) => (
+                    <option value={item.cod_id} key={'aprvStatus'+idx}>{item.cod_name}</option>
+                ))}
+            </select>
+            <br/> <br/>
+            <input type="date"></input>&nbsp;&nbsp;
+            <input type="date"></input>
+
+
+
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>번호</th>
+                        <th>작성자</th>
+                        <th>제목</th>
+                        <th>작성일</th>
+                        <th>결재일</th>
+                        <th>결재자</th>
+                        <th>결재상태</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {boardList.map((item) => (
+                        <tr>
+                            <td>{item.brd_id}</td>
+                            <td>{item.brd_created_by}</td>
+                            <td>{item.brd_content}</td>
+                            <td>{item.brd_created_at}</td>
+                            <td>{item.brd_approved_at}</td>
+                            <td>{item.brd_approved_by}</td>
+                            <td>{item.brd_status_name}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+
+            
         </>
     )
 }
