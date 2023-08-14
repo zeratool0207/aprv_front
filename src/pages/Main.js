@@ -66,6 +66,7 @@ const Main = () => {
             { reprYn == 'Y' && <button>대리결제</button>}
             <br/> <br/>
             <select>
+                <option key={'searchTypeDefault'}>선택</option>
                 {searchTypeList.map((item, idx) => (
                     <option value={item.cod_id} key={'searchType'+idx}>{item.cod_name}</option>
                 ))}
@@ -76,10 +77,14 @@ const Main = () => {
             &nbsp;
 
             <select>
+                <option key={'aprvStatusDefault'}>선택</option>
                 {aprvStatusList.map((item, idx) => (
                     <option value={item.cod_id} key={'aprvStatus'+idx}>{item.cod_name}</option>
                 ))}
             </select>
+
+            &nbsp;
+            <button onClick={() => console.log('조회')}>조회</button>
             <br/> <br/>
             <input type="date"></input>&nbsp;&nbsp;
             <input type="date"></input>
@@ -99,8 +104,8 @@ const Main = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {boardList.map((item) => (
-                        <tr>
+                    {boardList.map((item, idx) => (
+                        <tr key={"boardList"+idx}>
                             <td>{item.brd_id}</td>
                             <td>{item.brd_created_by}</td>
                             <td>{item.brd_content}</td>
