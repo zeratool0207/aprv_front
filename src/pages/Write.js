@@ -1,12 +1,54 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import axios from 'axios';
+
 
 const Write = () => {
+    const { state } = useLocation();
+    console.log(state);
+
+    useEffect( () => {
+        if ( state == 'brandNew') {
+            console.log('새거');
+        } else {
+            console.log('헌거');
+            goWrite(state);
+        }
+
+    },[state])
 
     const [ histList, setHistList ] = useState([]);
 
-    useEffect(() => {
-        console.log('Write 화면 최초 렌더링');
-    },[])
+    const goWrite = async (brd_id) => {
+        try {
+
+            const params = {
+                brd_id: brd_id
+            }
+
+            const response = await axios.get(
+                '/api/write/list',{ params }
+            );
+
+            console.log(response.data[0]);
+
+            // setBoardList(response.data[0].boardList);
+            // setSearchTypeList(response.data[0].searchTypeList);
+            // setAprvStatusList(response.data[0].aprvStatusList);
+            
+            // setUserName(response.data[0].boardList[0].usr_name);
+            // setPosition(response.data[0].boardList[0].cod_name);
+            // setReprYn(response.data[0].boardList[0].repr_yn);
+
+            // console.log(response.data[0].boardList);
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    // useEffect(() => {
+    //     goWrite();
+    // },[])
 
     return (
         <>

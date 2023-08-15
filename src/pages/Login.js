@@ -37,7 +37,6 @@ const Login = () => {
 
     const goLogin = async () => {
         try {
-
             const params = {
                 id: enteredId,
                 pass: enteredPw
@@ -46,8 +45,10 @@ const Login = () => {
             const response = await axios.get(
                 '/api/user/login', { params }
             );
-            console.log(response);
+
             console.log(response.data);
+            localStorage.setItem('position', response.data.usr_position);
+
             if (response.data.msg == 'success') {
                 navigate('/main');
             }

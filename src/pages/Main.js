@@ -33,7 +33,6 @@ const Main = () => {
             setPosition(response.data[0].boardList[0].cod_name);
             setReprYn(response.data[0].boardList[0].repr_yn);
 
-            console.log(response.data[0].boardList);
         } catch (e) {
             console.error(e);
         }
@@ -46,6 +45,7 @@ const Main = () => {
             );
 
             if (response.status == '200') {
+                localStorage.clear();
                 navigate('/');
             }
         } catch(e) {
@@ -53,8 +53,9 @@ const Main = () => {
         }
     }
 
-    const goWrite = () => {
-        navigate('/write')
+    const goWrite = (cd) => {
+        console.log('cd',cd);
+        navigate('/write', {state: cd});
     }
 
 
@@ -62,7 +63,12 @@ const Main = () => {
         <>
             <h2>{userName}({position}) 님 환영합니다.</h2>
             <button type="button" onClick={() => goLogout()}>로그아웃</button> &nbsp;
-            <button type="button" onClick={() => goWrite()}>글쓰기</button>  &nbsp;
+            {/* <button type="button" onClick={() => goWrite()}>글쓰기</button>  &nbsp; */}
+
+            <button 
+                type="button" 
+                onClick={() => goWrite('brandNew')}>글쓰기</button>  &nbsp;
+
             { reprYn == 'Y' && <button>대리결제</button>}
             <br/> <br/>
             <select>
@@ -105,7 +111,10 @@ const Main = () => {
                 </thead>
                 <tbody>
                     {boardList.map((item, idx) => (
-                        <tr key={"boardList"+idx}>
+                        <tr 
+                            key={"boardList"+idx}
+                            onClick={() => goWrite(item.brd_id)}
+                        >
                             <td>{item.brd_id}</td>
                             <td>{item.brd_created_by}</td>
                             <td>{item.brd_content}</td>
