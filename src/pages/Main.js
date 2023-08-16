@@ -54,8 +54,7 @@ const Main = () => {
     }
 
     const goWrite = (cd) => {
-        console.log('cd',cd);
-        navigate('/write', {state: cd});
+        navigate('/write', { state: cd });
     }
 
 
@@ -63,7 +62,6 @@ const Main = () => {
         <>
             <h2>{userName}({position}) 님 환영합니다.</h2>
             <button type="button" onClick={() => goLogout()}>로그아웃</button> &nbsp;
-            {/* <button type="button" onClick={() => goWrite()}>글쓰기</button>  &nbsp; */}
 
             <button 
                 type="button" 
@@ -133,14 +131,3 @@ const Main = () => {
 }
 
 export default Main;
-
-// brd_content: "업무결재"
-// brd_created_at: "2022-03-01"
-// brd_created_by: "netflix"
-// brd_id: 1
-// brd_status: "B001"
-// cod_id: "A001"
-// cod_name: "사원"
-// repr_yn: "N"
-// usr_name: "이대용"
-// usr_position: "A001"

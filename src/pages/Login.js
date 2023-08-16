@@ -46,8 +46,8 @@ const Login = () => {
                 '/api/user/login', { params }
             );
 
-            console.log(response.data);
             localStorage.setItem('position', response.data.usr_position);
+            localStorage.setItem('name', response.data.usr_name);
 
             if (response.data.msg == 'success') {
                 navigate('/main');
@@ -80,8 +80,7 @@ const Login = () => {
                 onChange={ (e) => setEnteredPw(e.target.value) }
             />
 
-            {
-                btnIsValid
+            { btnIsValid
                     ?
                         <button
                             onClick={() => goLogin()}

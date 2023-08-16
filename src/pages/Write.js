@@ -5,17 +5,38 @@ import axios from 'axios';
 
 const Write = () => {
     const { state } = useLocation();
-    console.log(state);
+
+    const [usrName, setUsrName] = useState('');
+    const [brdId, setBrdId] = useState('');
+
+    useEffect(() => {
+        setUsrName(localStorage.getItem('name'));
+    },[]);
+
 
     useEffect( () => {
         if ( state == 'brandNew') {
-            console.log('새거');
+            // console.log('새거');
+            goNextBrdId();
         } else {
-            console.log('헌거');
+            // console.log('헌거');
             goWrite(state);
         }
+    },[state]);
 
-    },[state])
+    const goNextBrdId = async () => {
+        try {
+            const response = await axios.get(
+                '/api/write/nextBrdId'
+            );
+
+            // console.log(response.data);
+            setBrdId(response.data);
+
+        } catch (e) {
+            console.error(e);
+        }
+    }
 
     const [ histList, setHistList ] = useState([]);
 
@@ -30,7 +51,7 @@ const Write = () => {
                 '/api/write/list',{ params }
             );
 
-            console.log(response.data[0]);
+            setBrdId(response.data[0].boardList[0].brd_id);
 
             // setBoardList(response.data[0].boardList);
             // setSearchTypeList(response.data[0].searchTypeList);
@@ -45,10 +66,6 @@ const Write = () => {
             console.error(e);
         }
     }
-
-    // useEffect(() => {
-    //     goWrite();
-    // },[])
 
     return (
         <>
@@ -70,8 +87,8 @@ const Write = () => {
                 </tbody>
             </table>
             <div>
-                번호: <input type="text"></input><br/>
-                작성자: <input type="text"></input><br/>
+                번호: <input type="text" value={brdId} disabled></input><br/>
+                작성자: <input type="text" value={usrName} disabled></input><br/>
                 제목: <input type="text"></input><br/>
                 내용: <textarea></textarea>
             </div>
