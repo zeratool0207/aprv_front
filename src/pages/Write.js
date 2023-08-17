@@ -6,8 +6,15 @@ import axios from 'axios';
 const Write = () => {
     const { state } = useLocation();
 
-    const [usrName, setUsrName] = useState('');
-    const [brdId, setBrdId] = useState('');
+    const [ flag, setFlag ] = useState('');
+    const [ usrName, setUsrName ] = useState('');
+    const [ brdId, setBrdId ] = useState('');
+    const [ brdTitle, setBrdTitle ] = useState('');
+    const [ brdContent ,setBrdContent ] = useState('');
+
+    const [ histList, setHistList ] = useState([]);
+    const [ boardList, setBoardList ] = useState([]);
+
 
     useEffect(() => {
         setUsrName(localStorage.getItem('name'));
@@ -16,11 +23,11 @@ const Write = () => {
 
     useEffect( () => {
         if ( state == 'brandNew') {
-            // console.log('새거');
             goNextBrdId();
+            setFlag('N'); // new
         } else {
-            // console.log('헌거');
             goWrite(state);
+            setFlag('O'); // old
         }
     },[state]);
 
@@ -29,16 +36,12 @@ const Write = () => {
             const response = await axios.get(
                 '/api/write/nextBrdId'
             );
-
-            // console.log(response.data);
             setBrdId(response.data);
 
         } catch (e) {
             console.error(e);
         }
     }
-
-    const [ histList, setHistList ] = useState([]);
 
     const goWrite = async (brd_id) => {
         try {
@@ -51,17 +54,14 @@ const Write = () => {
                 '/api/write/list',{ params }
             );
 
+            console.log(response.data[0]);
             setBrdId(response.data[0].boardList[0].brd_id);
+            setHistList(response.data[0].histList);
+            setBoardList(response.data[0].boardList[0]);
 
-            // setBoardList(response.data[0].boardList);
-            // setSearchTypeList(response.data[0].searchTypeList);
-            // setAprvStatusList(response.data[0].aprvStatusList);
-            
-            // setUserName(response.data[0].boardList[0].usr_name);
-            // setPosition(response.data[0].boardList[0].cod_name);
-            // setReprYn(response.data[0].boardList[0].repr_yn);
+            setBrdTitle(response.data[0].boardList[0].brd_title);
+            setBrdContent(response.data[0].boardList[0].brd_content);
 
-            // console.log(response.data[0].boardList);
         } catch (e) {
             console.error(e);
         }
@@ -73,13 +73,17 @@ const Write = () => {
             <table border="1">
                 <thead>
                     <tr>
-                        <th>결재요청</th>
-                        <th>과장</th>
-                        <th>부장</th>
+                        <th>임시저장</th>
+                        <th>결재대기</th>
+                        <th>결재중</th>
+                        <th>결재완료</th>
+                        <th>반려</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
+                        <td><input type="checkbox" disabled></input></td>
+                        <td><input type="checkbox" disabled></input></td>
                         <td><input type="checkbox" disabled></input></td>
                         <td><input type="checkbox" disabled></input></td>
                         <td><input type="checkbox" disabled></input></td>
@@ -89,8 +93,8 @@ const Write = () => {
             <div>
                 번호: <input type="text" value={brdId} disabled></input><br/>
                 작성자: <input type="text" value={usrName} disabled></input><br/>
-                제목: <input type="text"></input><br/>
-                내용: <textarea></textarea>
+                제목: <input type="text" value={flag == 'O' ? brdTitle : ''}></input><br/>
+                내용: <textarea value={flag == 'O' ? brdContent : ''}></textarea>
             </div>
             <div>
                 <button type="button">반려</button>
@@ -107,14 +111,14 @@ const Write = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {/* {histList.map((item, idx) => (
+                    {histList.map((item, idx) => (
                         <tr key={"histList"+idx}>
                             <td>{item.hst_id}</td>
                             <td>{item.hst_approved_at}</td>
                             <td>{item.hst_approved_by}</td>
                             <td>{item.hst_status_name}</td>
                         </tr>
-                    ))} */}
+                    ))}
                 </tbody>
             </table>
 
