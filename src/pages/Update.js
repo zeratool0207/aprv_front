@@ -2,11 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 
-
-const Write = () => {
+const Update = () => {
     const { state } = useLocation();
 
-    const [ flag, setFlag ] = useState('');
     const [ usrName, setUsrName ] = useState('');
     const [ position, setPosition ] = useState('');
     const [ brdId, setBrdId ] = useState('');
@@ -20,31 +18,8 @@ const Write = () => {
     useEffect(() => {
         setUsrName(localStorage.getItem('name'));
         setPosition(localStorage.getItem('position'));
+        goWrite(state);
     },[]);
-
-
-    useEffect( () => {
-        if ( state == 'brandNew') {
-            goNextBrdId();
-            setFlag('N'); // new
-        } else {
-            goWrite(state);
-            setFlag('O'); // old
-        }
-    },[state]);
-
-
-    const goNextBrdId = async () => {
-        try {
-            const response = await axios.get(
-                '/api/write/nextBrdId'
-            );
-            setBrdId(response.data);
-
-        } catch (e) {
-            console.error(e);
-        }
-    }
 
     const goWrite = async (brd_id) => {
         try {
@@ -70,6 +45,8 @@ const Write = () => {
             console.error(e);
         }
     }
+
+
 
     return (
         <>
@@ -130,4 +107,4 @@ const Write = () => {
     )
 }
 
-export default Write;
+export default Update;
