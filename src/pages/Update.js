@@ -63,24 +63,24 @@ const Update = () => {
                 </thead>
                 <tbody>
                     <tr>
-                        <td><input type="checkbox" checked={position == 'A001' ? true : false} disabled></input></td>
-                        <td><input type="checkbox" checked={position == 'A002' ? true : false} disabled></input></td>
-                        <td><input type="checkbox" checked={position == 'A003' ? true : false} disabled></input></td>
-                        <td><input type="checkbox" checked={position == 'A004' ? true : false} disabled></input></td>
-                        <td><input type="checkbox" checked={position == 'A005' ? true : false} disabled></input></td>
+                        <td><input type="checkbox" checked={position === 'A001' ? true : false} disabled></input></td>
+                        <td><input type="checkbox" checked={position ==='A002' ? true : false} disabled></input></td>
+                        <td><input type="checkbox" checked={position === 'A003' ? true : false} disabled></input></td>
+                        <td><input type="checkbox" checked={position === 'A004' ? true : false} disabled></input></td>
+                        <td><input type="checkbox" checked={position === 'A005' ? true : false} disabled></input></td>
                     </tr>
                 </tbody>
             </table>
             <div>
                 번호: <input type="text" value={brdId} disabled></input><br/>
                 작성자: <input type="text" value={usrName} disabled></input><br/>
-                제목: <input type="text" value={flag == 'O' ? brdTitle : ''}></input><br/>
-                내용: <textarea value={flag == 'O' ? brdContent : ''}></textarea>
+                제목: <input type="text" value={brdTitle}></input><br/>
+                내용: <textarea value={brdContent}></textarea>
             </div>
             <div>
-                {position == 'A003' || position == 'A004' || position == 'A005' ? <button type="button">반려</button> : null}
-                {position == 'A001' || position == 'A002' ? <button type="button">임시저장</button> : null }
-                {position == 'A001' || position == 'A002' ? <button type="button">결재</button> : null}
+                {position === 'A003' || position === 'A004' || position === 'A005' ? <button type="button">반려</button> : null}
+                {position === 'A001' || position === 'A002' ? <button type="button">임시저장</button> : null }
+                {position === 'A001' || position === 'A002' ? <button type="button">결재</button> : null}
             </div>
             <table border="1">
                 <thead>

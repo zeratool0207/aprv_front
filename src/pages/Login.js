@@ -48,6 +48,7 @@ const Login = () => {
 
             localStorage.setItem('position', response.data.usr_position);
             localStorage.setItem('name', response.data.usr_name);
+            localStorage.setItem('id', response.data.usr_id);
 
             if (response.data.msg == 'success') {
                 navigate('/main');

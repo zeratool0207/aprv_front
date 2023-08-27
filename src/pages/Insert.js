@@ -3,6 +3,12 @@ import axios from 'axios';
 
 const Insert = () => {
 
+    /* 추가
+        1. 위체크박스 삭제
+        2. 임시저장 결재요청 두개만
+        3.  Insert시   Board / History insert
+    */
+
     const [ brdId, setBrdId ] = useState('');
     const [ brdContent, setBrdContent ] = useState('');
     const [ brdTitle, setBrdTitle ] = useState('');
@@ -28,7 +34,7 @@ const Insert = () => {
         }
     }
 
-    const goStatusChange = async () => {
+    const goInsert = async () => {
 
         let brdStatus = '';
 
@@ -60,9 +66,8 @@ const Insert = () => {
                 내용: <textarea value={''}></textarea>
             </div>
             <div>
-                {position == 'A003' || position == 'A004' || position == 'A005' ? <button type="button">반려</button> : null}
                 {position == 'A001' || position == 'A002' ? <button type="button">임시저장</button> : null }
-                {position == 'A001' || position == 'A002' ? <button type="button">결재</button> : null}
+                {position == 'A001' || position == 'A002' ? <button type="button">결재요청</button> : null}
             </div>
         </>
     )

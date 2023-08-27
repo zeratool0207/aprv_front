@@ -4,6 +4,12 @@ import { useNavigate } from 'react-router-dom';
 
 const Main = () => {
 
+    /* 추가
+        1. Update 버튼 > 사원 대리   
+            > 반려시에만
+        2. 사원대리만 글쓰기 버튼 show
+        3. 과장차장부장만 대리결재 버튼 show
+    */
 
     const [ userName, setUserName ] = useState('');
     const [ position, setPosition ] = useState('');
@@ -53,8 +59,12 @@ const Main = () => {
         }
     }
 
-    const goWrite = (cd) => {
-        navigate('/write', { state: cd });
+    const goInsert = () => {
+        navigate('/insert');
+    }
+
+    const goUpdate = (cd) => {
+        navigate('/update', { state: cd });
     }
 
 
@@ -65,7 +75,7 @@ const Main = () => {
 
             <button 
                 type="button" 
-                onClick={() => goWrite('brandNew')}>글쓰기</button>  &nbsp;
+                onClick={() => goInsert()}>글쓰기</button>  &nbsp;
 
             { reprYn == 'Y' && <button>대리결제</button>}
             <br/> <br/>
@@ -93,8 +103,6 @@ const Main = () => {
             <input type="date"></input>&nbsp;&nbsp;
             <input type="date"></input>
 
-
-
             <table border="1">
                 <thead>
                     <tr>
@@ -111,7 +119,7 @@ const Main = () => {
                     {boardList.map((item, idx) => (
                         <tr 
                             key={"boardList"+idx}
-                            onClick={() => goWrite(item.brd_id)}
+                            onClick={() => goUpdate(item.brd_id)}
                         >
                             <td>{item.brd_id}</td>
                             <td>{item.brd_created_by}</td>
@@ -124,8 +132,6 @@ const Main = () => {
                     ))}
                 </tbody>
             </table>
-
-            
         </>
     )
 }

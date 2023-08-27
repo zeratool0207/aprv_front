@@ -4,6 +4,10 @@ import App from "../App";
 import Main from "../pages/Main";
 import Login from "../pages/Login";
 import Write from "../pages/Write";
+import Insert from "../pages/Insert";
+import Update from "../pages/Update";
+import ReprAprv from "../pages/ReprAprv";
+
 
 export const router = createBrowserRouter(
     [
@@ -24,6 +28,18 @@ export const router = createBrowserRouter(
                 {
                     path: '/write',
                     element: <Write />
+                },
+                {
+                    path: '/insert',
+                    element: <Insert />
+                },
+                {
+                    path: '/update',
+                    element: <Update />
+                },
+                {
+                    path: '/reprAprv',
+                    element: <ReprAprv />
                 },
             ]
         }
