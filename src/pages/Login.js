@@ -4,6 +4,14 @@ import { useNavigate } from "react-router-dom";
 
 const Login = () => {
 
+     /* 
+        추가
+
+        1. position과 position code 다 받기
+        2. 1번을 localStorage에 set하기
+
+    */
+
     const [ enteredId, setEnteredId ] = useState('');
     const [ enteredPw, setEnteredPw ] = useState('');
 
