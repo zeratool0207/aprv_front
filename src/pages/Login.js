@@ -42,7 +42,6 @@ const Login = () => {
         }
     };
 
-
     const goLogin = async () => {
         try {
             const params = {
@@ -54,9 +53,10 @@ const Login = () => {
                 '/api/user/login', { params }
             );
 
-            localStorage.setItem('position', response.data.usr_position);
-            localStorage.setItem('name', response.data.usr_name);
             localStorage.setItem('id', response.data.usr_id);
+            localStorage.setItem('name', response.data.usr_name);
+            localStorage.setItem('position', response.data.usr_position);
+            localStorage.setItem('position_nm', response.data.usr_position_nm);
 
             if (response.data.msg == 'success') {
                 navigate('/main');

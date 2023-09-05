@@ -1,0 +1,61 @@
+/* 
+    Login.js
+
+        A. 추가
+            1. position과 position code 다 받기
+            2. 1번을 localStorage에 set하기
+
+        B. 수정
+*/
+
+
+
+/* 
+    Main.js
+
+        A. 추가
+            1. Update 버튼 > 사원 대리   
+                > 반려시에만
+            2. 사원대리만 글쓰기 버튼 show
+            3. 과장차장부장만 대리결재 버튼 show
+            
+            5. 대리결재 받으면 없어야 할 사람이 Update Btn 생김
+            ( BackEnd에서  Yn 값 내려주기 )
+
+        B. 수정
+            1. setReprYn 내용 확인
+
+*/
+
+
+
+/* 
+    Insert.js
+
+        A. 추가
+            1. Insert시:  Board insert
+            2. Insert시:  History insert
+
+        B. 수정
+*/
+
+
+/* 
+    Update.js
+
+        A. 추가
+
+        B. 수정
+*/
+
+
+/* 
+    ReprAprv.js
+
+        A. 추가
+            1. 특정 X에게 내려주기
+            2. 대리결재 테이블 별도로 추가
+            ( 테이블명: tbl_aprv_repr )
+            3. 본인보다 낮은 직책으로 직책으로 selectBox
+            4. 직책 선택시 대리결재자
+*/

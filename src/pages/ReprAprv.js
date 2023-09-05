@@ -1,3 +1,6 @@
+import axios from 'axios';
+import { useState, useEffect } from 'react';
+
 const ReprAprv = () => {
     
     /* 
@@ -10,21 +13,56 @@ const ReprAprv = () => {
         4. 직책 선택시 대리결재자
     */
 
+    const [ positionList, setPositionList ] = useState([]);
+
+
+    useEffect( () => {
+        goPositionList();
+    },[]);
+
+    const goPositionList = async () => {
+        try {
+            const response = await axios.get(
+                '/api/repr/list'
+            )
+            setPositionList(response.data);
+
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
     return (
         <>
             <h2>대리결재</h2>
 
             <div>
-                직급: <input type="text" placeholder="직급" />
+                직급: 
+                <select>
+                        <option>선택</option>
+                        {positionList.map((item,idx) => (
+                            <option 
+                                value={item.cod_id} 
+                                key={'position' + idx}
+                            >
+                                {item.cod_name}
+                            </option>
+                        ))}
+                    </select>
+
             </div>
             <div>
                 대리결재자: 
                     <select>
-                        <option>부장</option>
-                        <option>차장</option>
-                        <option>과장</option>
-                        <option>대리</option>
-                        <option>사원</option>
+                        <option>선택</option>
+                        {positionList.map((item,idx) => (
+                            <option 
+                                value={item.cod_id} 
+                                key={'position' + idx}
+                            >
+                                {item.cod_name}
+                            </option>
+                        ))}
                     </select>
             </div>
             <div>
@@ -32,8 +70,6 @@ const ReprAprv = () => {
             </div>
 
             <button>승인</button>
-            <button>취소</button>
-
 
         </>
     )

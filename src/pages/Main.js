@@ -22,6 +22,7 @@ const Main = () => {
 
     const [ userName, setUserName ] = useState('');
     const [ position, setPosition ] = useState('');
+    const [ positionNm, setPositionNm ] = useState('');
     const [ reprYn, setReprYn ] = useState('N');
 
     const navigate = useNavigate();
@@ -29,6 +30,7 @@ const Main = () => {
     const [ boardList, setBoardList ] = useState([]);
     const [ searchTypeList, setSearchTypeList ] = useState([]);
     const [ aprvStatusList, setAprvStatusList ] = useState([]);
+
 
     useEffect( () => {
         goBoard();
@@ -49,6 +51,7 @@ const Main = () => {
 
             setUserName(localStorage.getItem('name'));
             setPosition(localStorage.getItem('position'));
+            setPositionNm(localStorage.getItem('position_nm'));
             // setReprYn(response.data[0].boardList[0].repr_yn);
             // 별도로 로직수정
 
@@ -82,17 +85,22 @@ const Main = () => {
         navigate('/update', { state: cd });
     }
 
+    const goRepr = () => {
+        navigate('/reprAprv');
+    }
 
     return (
         <>
-            <h2>{userName}({position}) 님 환영합니다.</h2>
+            <h2>{userName}({positionNm}) 님 환영합니다.</h2>
             <button type="button" onClick={() => goLogout()}>로그아웃</button> &nbsp;
 
             <button 
                 type="button" 
                 onClick={() => goInsert()}>글쓰기</button>  &nbsp;
 
-            { reprYn == 'Y' && <button>대리결제</button>}
+            {/* { reprYn == 'Y' && <button>대리결제</button>} */}
+            {(position == 'A003' || position == 'A004' || position == 'A005') && <button onClick={() => goRepr()}>대리결제</button>}
+
             <br/> <br/>
             <select>
                 <option key={'searchTypeDefault'}>선택</option>
