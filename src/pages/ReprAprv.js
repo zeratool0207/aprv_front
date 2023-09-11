@@ -14,10 +14,17 @@ const ReprAprv = () => {
     */
 
     const [ positionList, setPositionList ] = useState([]);
+    const [ personList, setPersonList ] = useState([]);
+
+    const [ boardList, setBoardList ] = useState([]);
+
+
+    const [ selectValue, setSelectValue ] = useState('');
 
 
     useEffect( () => {
         goPositionList();
+        goBoardList();
     },[]);
 
     const goPositionList = async () => {
@@ -32,14 +39,56 @@ const ReprAprv = () => {
         }
     }
 
+    const goBoardList = async () => {
+        try {
+            const response = await axios.get(
+                '/api/repr/board'
+            )
+
+            // console.log(response);
+            setBoardList(response.data);
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+
+
+    const goPersonList = async () => {
+        const params = {
+           position : selectValue,
+        }
+
+        try {
+            const response = await axios.get(
+                '/api/repr/user', { params }
+            )
+
+            // console.log(response);
+            setPersonList(response.data);
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    useEffect( () =>{
+        goPersonList();
+    },[selectValue])
+
+
+    const onChangeSelect = (e) => {
+        setSelectValue(e.target.value);
+    }
+
     return (
         <>
             <h2>대리결재</h2>
+            <button type="button">value: {selectValue}</button>
 
             <div>
                 직급: 
-                <select>
-                        <option>선택</option>
+                <select onChange={onChangeSelect}>
+                        <option value=''>선택</option>
                         {positionList.map((item,idx) => (
                             <option 
                                 value={item.cod_id} 
@@ -55,13 +104,22 @@ const ReprAprv = () => {
                 대리결재자: 
                     <select>
                         <option>선택</option>
-                        {positionList.map((item,idx) => (
+                        {personList.map((item,idx) => (
                             <option 
-                                value={item.cod_id} 
-                                key={'position' + idx}
+                                value={item.usr_id} 
+                                key={'user' + idx}
                             >
-                                {item.cod_name}
+                                {item.usr_name}
                             </option>
+                        ))}
+                    </select>
+            </div>
+            <div>
+                board:
+                    <select>
+                        <option>선택</option>
+                        {boardList.map((item,idx) => (
+                            <option value={item.brd_id}>{item.brd_title}</option>
                         ))}
                     </select>
             </div>

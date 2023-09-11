@@ -39,8 +39,12 @@ const Insert = () => {
     // 임시저장 및 결재요청
     const goInsert = async (cd) => {
 
+        console.log(brdId);
+        console.log(typeof brdId);
+
+
         const param = {
-            brd_id: Number(brdId),
+            brd_id: brdId,
             brd_content: brdContent,
             brd_created_by: usrName,
             // brd_created_at: '',
@@ -52,6 +56,7 @@ const Insert = () => {
             const response = await axios.put(
                 '/api/write',{param}
             )
+            console.log(response);
         }catch (e) {
             console.error(e);
         }
